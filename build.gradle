@@ -18,6 +18,7 @@ dependencies {
 intellij {
     version 'PC-2019.3.2'
     type 'PC'
+    plugins 'PythonCore:193.6015.11'
 }
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
