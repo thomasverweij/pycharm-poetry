@@ -1,0 +1,24 @@
+<idea-plugin>
+    <id>org.example.pycharm-poetry</id>
+    <name>Pycharm Poetry</name>
+    <vendor email="thomasverweij01@gmail.com" url="https://tho.dev">Thodev</vendor>
+
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+       <actions>
+        <!-- Add your actions here -->
+        <action id="PoetryAction" class="PoetryAction" text="poetry" description="Use poetry to manage project">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
