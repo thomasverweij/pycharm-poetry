@@ -28,6 +28,7 @@ compileTestKotlin {
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+      Initial functionality: <br/>
+      Contextmenu option when rightclicking pyproject.toml to setup environment. <br/>
+      Detect pyproject.toml on startup. <br/> """
 }

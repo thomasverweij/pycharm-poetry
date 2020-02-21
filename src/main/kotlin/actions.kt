@@ -4,7 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 
 // TODO: modal at pyproject.toml change asking for install
-// TODO: modal at startup asking for setup
+// TODO: modal to inform user of missing poetry installation
 
 class PoetryAction : AnAction() {
 

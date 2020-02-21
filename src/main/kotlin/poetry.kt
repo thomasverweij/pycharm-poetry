@@ -67,17 +67,13 @@ object Poetry {
         ProgressManager.getInstance().run(task)
     }
 
-    private fun venvIsOutdated(project: Project): Boolean {
-        return true
-    }
-
     private fun getPoetryVenv(projectPath: String) = runPoetry(projectPath, "env","info","-p")
 
 
     private fun setProjectSdk(project: Project, sdk: Sdk) {
         SdkConfigurationUtil.addSdk(sdk)
         SdkConfigurationUtil.setDirectoryProjectSdk(project, sdk)
-        showNotification(project, "Set venv to: ${sdk.homePath}")
+        showNotification(project, "Configured venv to: ${sdk.homePath}")
     }
 
     private fun showNotification(project: Project?, message: String?) {

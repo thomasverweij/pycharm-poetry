@@ -1,10 +1,10 @@
 <idea-plugin>
     <id>dev.tho.pycharm-poetry</id>
-    <name>Pycharm Poetry</name>
+    <name>Poetry</name>
     <vendor email="thomasverweij01@gmail.com" url="https://tho.dev">thodev</vendor>
 
     <description><![CDATA[
-        Plugin to install project dependencies and configure interpreter with poetry.
+        Simple plugin to configure your IDE with poetry projects.
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -18,7 +18,7 @@
     </extensions>
        <actions>
         <!-- Add your actions here -->
-        <action id="PoetryAction" class="PoetryAction" text="Poetry Update/Install" description="Use poetry to manage project">
+        <action id="PoetryAction" class="PoetryAction" text="Import Poetry Project" description="Use poetry to manage project">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
