@@ -3,7 +3,6 @@ import com.intellij.execution.RunCanceledByUserException
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.configurations.PathEnvironmentVariableUtil
 import com.intellij.execution.process.CapturingProcessHandler
-import com.intellij.execution.process.ProcessOutput
 import com.intellij.notification.NotificationGroup
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
@@ -22,7 +21,6 @@ import com.jetbrains.python.sdk.PythonSdkUtil
 import com.jetbrains.python.sdk.createSdkByGenerateTask
 import com.jetbrains.python.sdk.pythonSdk
 import org.jetbrains.annotations.SystemDependent
-import java.nio.file.Path
 
 object Poetry {
 
