@@ -1,0 +1,1 @@
+class PoetryNotIntalledException(override var message:String): Exception(message)

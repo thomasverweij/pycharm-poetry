@@ -1,7 +1,9 @@
 import com.intellij.execution.ExecutionException
 import com.intellij.execution.RunCanceledByUserException
 import com.intellij.execution.configurations.GeneralCommandLine
+import com.intellij.execution.configurations.PathEnvironmentVariableUtil
 import com.intellij.execution.process.CapturingProcessHandler
+import com.intellij.execution.process.ProcessOutput
 import com.intellij.notification.NotificationGroup
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
@@ -20,15 +22,23 @@ import com.jetbrains.python.sdk.PythonSdkUtil
 import com.jetbrains.python.sdk.createSdkByGenerateTask
 import com.jetbrains.python.sdk.pythonSdk
 import org.jetbrains.annotations.SystemDependent
+import java.nio.file.Path
 
 object Poetry {
 
+    const val PYPROJECT_TOML = "pyproject.toml"
+    const val POETRY_EXECUTABLE = "poetry"
+
     fun importProject(project: Project) { // configure or install new venv
-        val poetrySdk: Sdk? = createSdkFromVenvUnderProgress(project)
-        if (poetrySdk != null && poetrySdk.homePath != project.pythonSdk?.homePath) {
+        try {
+            val poetrySdk: Sdk? = createSdkFromVenvUnderProgress(project)
+            if (poetrySdk != null && poetrySdk.homePath != project.pythonSdk?.homePath) {
                 setProjectSdk(project, poetrySdk)
-        } else {
-            updatePoetryDepsUnderProgress(project)
+            } else {
+                updatePoetryDepsUnderProgress(project)
+            }
+        } catch (e: PoetryNotIntalledException) {
+            showNotification(project, "Poetry not installed")
         }
     }
 
@@ -76,12 +86,6 @@ object Poetry {
         showNotification(project, "Configured venv to: ${sdk.homePath}")
     }
 
-    private fun showNotification(project: Project?, message: String?) {
-        val notificationGroup = NotificationGroup.balloonGroup("Poetry notifications")
-        message?.let { notificationGroup.createNotification(it, MessageType.INFO) }?.notify(project)
-    }
-
-
     private fun getPoetryVenvOrInstall(projectPath: String): String {
         return try {
             runPoetry(projectPath, "env","info","-p")
@@ -96,7 +100,7 @@ object Poetry {
 
 
     private fun runPoetry(projectPath: @SystemDependent String, vararg args: String): String {
-        val executable = "poetry" // TODO: reliable way to get executable
+        val executable = getPoetryExecutable()
         val command = listOf(executable) + args
         val commandLine = GeneralCommandLine(command).withWorkDirectory(projectPath)
         val handler = CapturingProcessHandler(commandLine)
@@ -123,5 +127,15 @@ object Poetry {
                 else -> stdout
             }
         }
+    }
+
+    private fun getPoetryExecutable(): String {
+        return PathEnvironmentVariableUtil.findInPath(POETRY_EXECUTABLE)?.path
+                ?: throw PoetryNotIntalledException("")
+    }
+
+    private fun showNotification(project: Project?, message: String?) {
+        val notificationGroup = NotificationGroup.balloonGroup("Poetry notifications")
+        message?.let { notificationGroup.createNotification(it, MessageType.INFO) }?.notify(project)
     }
 }
