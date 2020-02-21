@@ -14,11 +14,11 @@
     <depends>com.intellij.modules.python</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <postStartupActivity implementation="PoetryStartupActivity"/>
     </extensions>
        <actions>
         <!-- Add your actions here -->
-        <action id="PoetryAction" class="PoetryAction" text="Poetry" description="Use poetry to manage project">
+        <action id="PoetryAction" class="PoetryAction" text="Poetry Update/Install" description="Use poetry to manage project">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
